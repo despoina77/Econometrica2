@@ -18,14 +18,18 @@ import model.CountryData;
 import model.CountryDataset;
 import model.Dataset;
 
-/**
- *
- * @author Depoula
- */
+
+//Η κλάση αυτή περιέχει μεθόδους που θα χρησιμοποιηθούν σε όλο το πρόγραμμα 
+//και κυρίως απο τα μενού του Gui
 public class mainPageController {
     public static DefaultTableModel gdpModel, oilModel;
    
-    
+     /**
+     * //Ελέγχει αν υπαρχουν δεδομένα για το ΑΕΠ στη Βάση για να τα χρησιμοποιήσει στην εφαρμογή
+     * αλλιώς τα εισάγει από το API.
+     * @param country //Παράμετρος τύπου Country για να ελεγχεί αν η συγκεκριμένη χωρα εχει δεδομένα ή όχι
+     * @return //Επιστρέφει τα δεδομένα
+     */
     public static CountryDataset getGdpData(Country country){
        CountryDataset countryDataset = null;
         
@@ -37,7 +41,12 @@ public class mainPageController {
              
        return countryDataset;
     }
-    
+     /**
+     * //Ελέγχει αν υπαρχουν δεδομένα για το OIL στη Βάση για να τα χρησιμοποιήσει στην εφαρμογή
+     * αλλιώς τα εισάγει από το API.
+     * @param country //Παράμετρος τύπου Country για να ελεγχεί αν η συγκεκριμένη χωρα εχει δεδομένα ή όχι
+     * @return //Επιστρέφει τα δεδομένα
+     */
     public static CountryDataset getOilData(Country country){
        CountryDataset countryDataset = null;
        if(DataBase.alreadyExist(country)){
@@ -47,7 +56,11 @@ public class mainPageController {
        }
        return countryDataset;
     }
-    
+    /**
+     * //Παίρνει τα δεδομένα του GDP από τη DB και τα εμφανίζει στην εφαρμογή στο σντίστοιχο table.
+     * @param countryCode //Παράμετρος τύπου CountryCode για να ελεγχεί τη συγκεκριμένη χώρα σύμφωνα με το κωδικό της
+     * @return //Επστρέφει τα στοιχεία (Πεδία "Year,value")που θα εμφανίζονται στην εφαρμογή
+     */
     public static CountryDataset getGdpDataFromDb(Country countryCode){
         CountryDataset countrydataset = DataBase.getCountryGdpData(countryCode);        
         gdpModel = new DefaultTableModel();            
@@ -63,7 +76,11 @@ public class mainPageController {
         }
         return countrydataset;
     }
-    
+    /**
+     * //Παίρνει τα δεδομένα του OIL από τη DB και τα εμφανίζει στην εφαρμογή στο σντίστοιχο table.
+     * @param countryCode ////Παράμετρος τύπου CountryCode για να ελεγχεί τη συγκεκριμένη χώρα σύμφωνα με το κωδικό της
+     * @return //Επστρέφει τα στοιχεία (Πεδία "Year,value")που θα εμφανίζονται στην εφαρμογή
+     */
     public static CountryDataset getOilDataFromDb(Country countryCode){
         CountryDataset countrydataset = DataBase.getCountryOilData(countryCode);        
         oilModel = new DefaultTableModel();            
@@ -80,7 +97,12 @@ public class mainPageController {
       
         return countrydataset;
     }
-    
+    /**
+     * //Παίρνει τα δεδομένα του GDP από το API τα οποία είναι σε μορφή JSON και κρατάει αυτά που μας χρειάζονται,
+     * τα οποία αποθηκεύει σε ενα array List.
+     * @param countryCode //Παράμετρος τύπου CountryCode για να ελεγχεί τη συγκεκριμένη χώρα σύμφωνα με το κωδικό της
+     * @return //Επστρέφει τα δεδομένα που έχουν αποθηκευθεί στο ArrayList.
+     */
     public static CountryDataset getGdpDataFromApi(Country countryCode){
        
         QuandleApi qa = new QuandleApi();        
@@ -124,7 +146,12 @@ public class mainPageController {
         return cds;
     }
     
-    
+    /**
+     * //Παίρνει τα δεδομένα του OIL από το API τα οποία είναι σε μορφή JSON και κρατάει αυτά που μας χρειάζονται,
+     * τα οποία αποθηκεύει σε ενα array List.
+     * @param countryCode //Παράμετρος τύπου CountryCode για να ελεγχεί τη συγκεκριμένη χώρα σύμφωνα με το κωδικό της
+     * @return //Επστρέφει τα δεδομένα που έχουν αποθηκευθεί στο ArrayList.
+     */
     public static CountryDataset getOilDataFromApi(Country countryCode){
         QuandleApi qa = new QuandleApi();        
         CountryDataset cds=null;

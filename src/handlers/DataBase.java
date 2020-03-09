@@ -22,10 +22,16 @@ import model.CountryDataset;
  * @author Depoula
  */
 public class DataBase {      
-    
+    /**
+ * //Δημιουργία entity Manager
+ */
     private static EntityManagerFactory emf = Persistence.createEntityManagerFactory("econometrica2PU");
     private static EntityManager em = emf.createEntityManager();        
-    
+    /**
+     * //Μέθοδος για να μην αποθηκεύονται χώρες που ήδη υπάρχουν στη Βάση Δεδομένων
+     * @param country //Παράμετρος τύπου country για να ελέγχει αν η χώρα είναι αποθηκευμένη.
+     * @return //Επιστρέφει true/false σαν αποτέλεσμα του ελεγχου ότι υπάρχει ή όχι η χώρα
+     */
     public static boolean alreadyExist(Country country){
         
         TypedQuery<Long> query = em.createQuery("SELECT COUNT(c) FROM Country c where c.isoCode = :isoCode", Long.class);
@@ -36,7 +42,11 @@ public class DataBase {
         else
             return false;
     }
-    
+    /**
+     *  //Επιλέγει τα δεδομένα που αφορούν το OIL
+     * @param country //Παράμετρος τύπου country για να επιλεγονται τα δεδομένα ανάλογα τη χώρα
+     * @return //Επιστρέφει τις τιμές του OIL
+     */
     public static CountryDataset getCountryOilData(Country country){
         CountryDataset c = null;
         try{
@@ -51,7 +61,11 @@ public class DataBase {
         
         return c;
     }
-    
+    /**
+     *  //Επιλέγει τα δεδομένα που αφορούν το GDP
+     * @param country //Παράμετρος τύπου country για να επιλεγονται τα δεδομένα ανάλογα τη χώρα
+     * @return //Επιστρέφει τις τιμές του GDP
+     */
     public static CountryDataset getCountryGdpData(Country country){
         CountryDataset c = null;
         try{
@@ -64,7 +78,9 @@ public class DataBase {
         }
         return c;
     }
-    
+    /**
+     * //Διαγραφή των δεδομένων της βάσης μέσω του entity Manager
+     */
     public static void deleteDB() {
        int deleteMessege = JOptionPane.showConfirmDialog(null, "Tα δεδομένα θα διαγραφούν. Είστε Σίγουροι;", "Διγραφή Δεδομένων", JOptionPane.YES_NO_OPTION);
         
@@ -92,7 +108,7 @@ public class DataBase {
             }
         }
     }
-    
+    // Αποθήκευση δεδομένων από JSON στη βαση δεδομένων
     public static void save(Country country) {
            //System.out.println("ok");
             em.getTransaction().begin();

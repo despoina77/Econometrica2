@@ -11,10 +11,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-/**
- * 
- * @author Depoula
- */
+//Η κλαση αυτη ειναι υπευθυνη για την αναγνωση του CSV αρχειου.
 public class FileCsv {
     
     private String csvFile;
@@ -24,6 +21,9 @@ public class FileCsv {
         this.csvFile = file;
         this.fields = new ArrayList<String[]>();
     }
+    //Η μέθοδος αυτη διαβάζει το αρχείο CSV "iso-countries" στο οποίο εντοπίζει 
+    //τις χώρες που βρίσκονται στη πρώτη στήλη του αρχείου, και στη συνέχεια 
+    //φορτώνει μόνο τα ονόματα των χωρών στο σχετικό DropDownμενού.
     public ArrayList<String[]> read() {        
 
         

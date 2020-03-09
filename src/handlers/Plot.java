@@ -27,25 +27,25 @@ import org.jfree.data.time.Year;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.ApplicationFrame;
 import org.jfree.ui.RefineryUtilities;
-/**
- *
- * @author Depoula
- */
+
+//Με την επιλογή του πλήκτρου Plot το σύστημα εμφανίζει σε αντιπαραβολή (στο ίδιο διάγραμμα 
+//δηλαδή για να είναι δυνατή η σύγκριση) σε ξεχωριστό παράθυρο τις 2 χρονοσειρές.
 public class Plot extends JFrame{
    
-  
+    
     private ArrayList<CountryDataset> countryDatasetList;
     private CountryDataset oil;
     private CountryDataset gdp;
-
+     
     public Plot(final String title, CountryDataset oil, CountryDataset gdp) {      
+        //Δημιουργία Τιτλου διαγράμματος
           super(title);
           this.oil = oil;
           this.gdp = gdp;
           this.countryDatasetList = countryDatasetList;
           final String chartTitle = title;
           final XYDataset dataset = createDataset1(); 
-
+          //Δημιουργία απεικονισης των Labels του διαγράμματος
           final JFreeChart chart = ChartFactory.createTimeSeriesChart(
               chartTitle, 
               "Date", 
@@ -57,7 +57,7 @@ public class Plot extends JFrame{
           );
 
           final XYPlot plot = chart.getXYPlot();
-
+          //Δημιουργία δευτερου αξονα για τo OIL data (Oil Consumption) 
           final NumberAxis axis2 = new NumberAxis("Secondary");
           axis2.setAutoRangeIncludesZero(false);
           plot.setRangeAxis(1, axis2);
@@ -70,18 +70,21 @@ public class Plot extends JFrame{
               final StandardXYItemRenderer rr = (StandardXYItemRenderer) renderer;
               rr.setShapesFilled(true);
           }
-
+          //Μετατροπή του GDP σε εκατομμύρια EURO
           NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
           NumberFormat formatter = NumberFormat.getIntegerInstance();
           rangeAxis.setNumberFormatOverride(formatter);
-
+        //Η κλάση StandardXYItemRenderer μπορεί να σχεδιάσει (α)σχήματα σε κάθε σημείο, ή 
+        //(β) γραμμές μεταξύ σημείων, ή (γ) και τα δύο σχήματα και γραμμές.
+        //Δεδομενου οτι εχουμε δυο αξονες μια για το time και η αλλη για το GDP
+        //τοτε θα κατασκευαστουν 2 κλασεις. 
           final StandardXYItemRenderer renderer0 = new StandardXYItemRenderer();
           renderer0.setSeriesPaint(0, Color.blue);
           renderer0.setPlotLines(true);
           renderer0.setBaseShapesVisible(true);
           renderer0.setToolTipGenerator(StandardXYToolTipGenerator.getTimeSeriesInstance());
           plot.setRenderer(0, renderer0);
-
+          
           final StandardXYItemRenderer renderer1 = new StandardXYItemRenderer();
           renderer1.setSeriesPaint(0, Color.red);
           renderer1.setPlotLines(true);
@@ -89,16 +92,19 @@ public class Plot extends JFrame{
           renderer1.setToolTipGenerator(StandardXYToolTipGenerator.getTimeSeriesInstance());
           plot.setRenderer(1, renderer1);
 
-
-
+          //Η κλάση DateAxis εμφανίζει τις ημερομηνίες στους αξονες
           final DateAxis axis = (DateAxis) plot.getDomainAxis();
           axis.setDateFormatOverride(new SimpleDateFormat("yyyy"));
-
+          //Ορίζω μεγεθους του frame
           final ChartPanel chartPanel = new ChartPanel(chart);
           chartPanel.setPreferredSize(new java.awt.Dimension(800, 400));
           setContentPane(chartPanel);
 
       }
+    /**
+     * //Εισαγωγή των δεδομένων του GDP στο γράφημα
+     * @return //Επιστρέφει τις τιμές που θα εισαχθουν στο γράφημα
+     */
       private XYDataset createDataset1() {
 
           final TimeSeries s1 = new TimeSeries("Oil Data ", Year.class);
@@ -116,7 +122,10 @@ public class Plot extends JFrame{
           return dataset;
 
       }
-
+      /**
+       * //Εισαγωγή των δεδομένων του OIL στο γράφημα
+       * @return //Επιστρέφει τα δεδομένα για να εισαχθούν στο γράφημα
+       */
       private XYDataset createDataset2() {
           final TimeSeries timeseries = new TimeSeries("Gdp Data ", Year.class); 
           if(this.gdp != null){

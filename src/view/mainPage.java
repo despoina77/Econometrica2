@@ -102,6 +102,7 @@ public class mainPage extends javax.swing.JFrame {
             }
         });
 
+        jbtnPlot.setEnabled(false);
         jbtnPlot.setText("Plot");
         jbtnPlot.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -109,6 +110,7 @@ public class mainPage extends javax.swing.JFrame {
             }
         });
 
+        jbtnSave.setEnabled(false);
         jbtnSave.setText("Save");
         jbtnSave.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -212,7 +214,6 @@ public class mainPage extends javax.swing.JFrame {
                                 .addComponent(jchkSaved)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(layout.createSequentialGroup()
@@ -295,7 +296,6 @@ public class mainPage extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         FileCsv fc = new FileCsv("iso-countries.csv");
         
@@ -307,17 +307,17 @@ public class mainPage extends javax.swing.JFrame {
             countryCsvList.put(value[0], value[2]);
 
         }
-        //jcbCountries.setSelectedItem("GEORGIA");
-        //jcbCountries.setSelectedItem("ANTARCTICA");
+        
         jcbCountries.setSelectedItem("GREECE");
 
-    }//GEN-LAST:event_formWindowOpened
-
+    }                                 
+//GEN-LAST:event_formWindowOpened
     private void jbtnFetchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnFetchActionPerformed
-        // TODO add your handling code here:
+        jbtnSave.setEnabled(true);
+        jbtnPlot.setEnabled(true);
         country = new Country();
        
-        //country.
+        
         String countryIsoCode = countryCsvList.get(jcbCountries.getSelectedItem().toString());
         String countryName = jcbCountries.getSelectedItem().toString();
         Collection<CountryDataset> countryDatasetCollection = new ArrayList<CountryDataset>();
@@ -334,6 +334,8 @@ public class mainPage extends javax.swing.JFrame {
             countryDatasetCollection.add(cdsGdp);
         }else{
             jlblGdp.setText("GDP (current LCU)- " );
+            jlblGdpStartDate.setText("Sart Date: -");
+            jlblGdpEndDate.setText("End Date -");
             jtableGdp.setModel(new DefaultTableModel());
             JOptionPane.showMessageDialog(null, "Δεν υπαρχουν δεδομενα ΑΕΠ για την " +this.country.getName()+ " ", "Προσοχή", JOptionPane.WARNING_MESSAGE);
         }
@@ -349,6 +351,8 @@ public class mainPage extends javax.swing.JFrame {
         }
         else{   
             jlblOil.setText("Oil Consumption- " );
+            jlblGdpStartDate.setText("Sart Date: -");
+            jlblGdpEndDate.setText("End Date -");
             jtableOil.setModel(new DefaultTableModel());
             JOptionPane.showMessageDialog(null, "Δεν υπαρχουν δεδομενα καταναλωσης πετρελαιου για την " +this.country.getName()+ " ", "Προσοχή", JOptionPane.WARNING_MESSAGE);
         }
@@ -363,8 +367,8 @@ public class mainPage extends javax.swing.JFrame {
         }
         
 
-    }//GEN-LAST:event_jbtnFetchActionPerformed
-
+    }                                         
+//GEN-LAST:event_jbtnFetchActionPerformed
     private void jbtnPlotActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnPlotActionPerformed
         //PLOT BUTTON
 
@@ -377,7 +381,8 @@ public class mainPage extends javax.swing.JFrame {
 
         chart.setVisible(true);
     }//GEN-LAST:event_jbtnPlotActionPerformed
-
+                                                
+    
     private void jbtnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnDeleteActionPerformed
         // TODO add your handling code here:
 
@@ -386,8 +391,10 @@ public class mainPage extends javax.swing.JFrame {
 
     private void jbtnSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jbtnSaveActionPerformed
         // TODO add your handling code here:
-        //System.out.println(country);
+       
         if(DataBase.alreadyExist(country)){
+            DataBase.save(country);
+            jchkSaved.setSelected(true);
             System.out.println("data not saved");
             JOptionPane.showMessageDialog(null, "Είναι ήδη η " +this.country.getName()+ " αποθηκευμένη στην βάση", "Προσοχή", JOptionPane.WARNING_MESSAGE);
         }else{
@@ -401,14 +408,14 @@ public class mainPage extends javax.swing.JFrame {
     private void jchkSavedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jchkSavedActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jchkSavedActionPerformed
-
+                                             
     
     
     private CountryDataset getDataset(String type, Collection<CountryDataset> cds){
        
         for(CountryDataset cd : cds){
             if(type.toLowerCase().equals(cd.getName().substring(0, 3).toLowerCase())){
-                //System.out.println(cd.getName().substring(0, 3).toLowerCase());
+                
                 return cd;
             }
             

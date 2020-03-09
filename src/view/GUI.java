@@ -107,7 +107,7 @@ public class GUI extends javax.swing.JFrame {
         RefineryUtilities.centerFrameOnScreen(about);
         about.setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
-
+    //GEN-LAST:event_jButton2ActionPerformed
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         mainPage view = null;
@@ -116,7 +116,7 @@ public class GUI extends javax.swing.JFrame {
         RefineryUtilities.centerFrameOnScreen(view);
         view.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    //GEN-LAST:event_jButton2ActionPerformed
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // Exit Button
         Component Frame = null;
@@ -124,7 +124,7 @@ public class GUI extends javax.swing.JFrame {
             JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION)
             System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
-
+    //GEN-LAST:event_jButton2ActionPerformed
  
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
