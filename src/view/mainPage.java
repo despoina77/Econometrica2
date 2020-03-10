@@ -5,7 +5,7 @@
  */
 package view;
 
-import Controllers.mainPageController;
+import Controller.mainPageController;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
